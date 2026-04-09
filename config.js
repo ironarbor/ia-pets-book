@@ -1,5 +1,5 @@
 window.IAPETS_CONFIG = {
-  SUPABASE_URL: "https://YOUR_PROJECT.supabase.co",
-  SUPABASE_ANON_KEY: "YOUR_SUPABASE_ANON_KEY",
-  EDGE_BASE_URL: "https://YOUR_PROJECT.functions.supabase.co"
+  SUPABASE_URL: 'https://pfiiggjsztshqfanxygh.supabase.co',
+  SUPABASE_ANON_KEY: 'sb_publishable_9MnQx4m4N1gt0wxK5oMkgQ_VFqQ2fy4',
+  EDGE_BASE_URL: 'https://pfiiggjsztshqfanxygh.supabase.co/functions/v1'
 };
