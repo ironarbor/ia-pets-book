@@ -488,23 +488,6 @@
             </div>
           </div>
 
-          <div class="checkboxes">
-            <div class="check-card">
-              <h4>Additional dog</h4>
-              <p>Adds the configured additional-dog rate where applicable.</p>
-              <label><input type="checkbox" id="has_additional_dog" disabled checked /> Derived from dog count</label>
-            </div>
-            <div class="check-card">
-              <h4>Medication support</h4>
-              <p>Flag the request for review if medication or special administration is needed.</p>
-              <label><input type="checkbox" id="medication_support" /> Medication support needed</label>
-            </div>
-            <div class="check-card">
-              <h4>Notes</h4>
-              <p>Temperament, routine, feeding, separation habits, or anything important you should know.</p>
-              <label><input type="checkbox" id="show_notes" checked disabled /> Included below</label>
-            </div>
-          </div>
 
           <div class="field" style="margin-top:18px;">
             <label for="care_notes">Care notes</label>
@@ -773,7 +756,6 @@
         weight_lbs: $$('#weight_lbs').value,
         temperament_notes: $$('#temperament_notes').value.trim(),
         dog_count: Number($$('#dog_count').value || 1),
-        medication_support: $$('#medication_support').checked,
         care_notes: $$('#care_notes').value.trim(),
         medication_notes: $$('#medication_notes').value.trim(),
         quote
