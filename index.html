@@ -347,26 +347,21 @@
 <body>
   <div class="wrap">
     <div class="eyebrow">Request a service</div>
-    <h1>Build the quote. Submit the request. Keep control.</h1>
+    <h1>Request Booking</h1>
     <p class="intro">
-      This version is intentionally not an instant-book flow. It gives owners an accurate estimate,
-      captures the key service details, and makes clear that payment happens only after you review
-      and approve the request.
+      Request your desired service type, dates, and times. Upon approval , you will receive a link to pay and finalize the booking.
     </p>
 
     <section class="flow">
       <article class="flow-card">
         <h3>Step 1 — Request.</h3>
-        <p>Client chooses dates, service type, dog count, and care details. A live estimate appears before submission.</p>
+        <p>Choose dates, service type, dog count, and care details. A pricing estimate appears before submission.</p>
       </article>
       <article class="flow-card">
-        <h3>Step 2 — Review.</h3>
-        <p>You review the request, confirm fit and availability, and can approve as quoted or revise before payment.</p>
+        <h3>Step 2 — Payment & Confirmation.</h3>
+        <p>Once fit and availability are confirmed, you will receive a Stripe payment link. Payment locks in the stay and triggers confirmation.</p>
       </article>
-      <article class="flow-card">
-        <h3>Step 3 — Confirm & Pay.</h3>
-        <p>Only approved requests receive a Stripe payment link. Payment locks in the stay and triggers confirmation emails.</p>
-      </article>
+      
     </section>
 
     <div class="layout">
@@ -448,7 +443,6 @@
                 <option value="1">1 dog</option>
                 <option value="2">2 dogs</option>
                 <option value="3">3 dogs</option>
-                <option value="4">4 dogs</option>
               </select>
               <div class="field-error" data-error-for="dog_count"></div>
             </div>
