@@ -696,20 +696,31 @@
     }
 
     async function loadRates() {
-      const { data, error } = await supabase
-        .from('pricing')
-        .select('service_type, base_rate, additional_dog_rate, unit')
-        .eq('is_active', true);
+  const { data, error } = await supabase
+    .from('pricing')
+    .select(`
+      service_type,
+      base_rate,
+      additional_dog_rate,
+      unit,
+      included_duration_value,
+      included_duration_unit,
+      extra_time_increment_value,
+      extra_time_increment_unit,
+      extra_time_rate,
+      extra_time_rule
+    `)
+    .eq('is_active', true);
 
-      if (error) {
-        showMessage('Unable to load pricing. Please try again later.', true);
-        console.error(error);
-        return;
-      }
+  if (error) {
+    showMessage('Unable to load pricing. Please try again later.', true);
+    console.error(error);
+    return;
+  }
 
-      activeRates = Object.fromEntries(data.map(row => [row.service_type, row]));
-      calculateQuote();
-    }
+  activeRates = Object.fromEntries(data.map(row => [row.service_type, row]));
+  calculateQuote();
+}
 
     function clearErrors() {
       document.querySelectorAll('.field-error').forEach(el => el.textContent = '');
