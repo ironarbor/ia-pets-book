@@ -366,6 +366,25 @@
         </div>
 
         <form id="booking-form" class="body">
+
+          <section class="returning-client-check">
+  <label for="client-email-lookup">Email</label>
+  <input
+    type="email"
+    id="client-email-lookup"
+    name="client_email_lookup"
+    placeholder="Enter your email"
+    autocomplete="email"
+  />
+
+  <div id="returning-client-box" style="display:none; margin-top:12px;">
+    <p style="margin-bottom:10px;"><strong>Welcome back.</strong> We found your saved information.</p>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button type="button" id="use-saved-info-btn">Use saved info</button>
+      <button type="button" id="start-fresh-btn">Start fresh</button>
+    </div>
+  </div>
+</section>
           <h3 class="section">Owner and pet basics</h3>
 
           <div class="grid">
@@ -701,6 +720,98 @@
   
   </script>
 
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  let savedClientPayload = null;
+
+  const emailLookupInput = document.getElementById('client-email-lookup');
+  const returningClientBox = document.getElementById('returning-client-box');
+  const useSavedInfoBtn = document.getElementById('use-saved-info-btn');
+  const startFreshBtn = document.getElementById('start-fresh-btn');
+
+  async function lookupClientByEmail(email) {
+    if (!email) return;
+
+    const { data, error } = await supabaseClient.rpc('get_client_prefill_by_email', {
+      input_email: email
+    });
+
+    if (error) {
+      console.error('Client lookup error:', error);
+      returningClientBox.style.display = 'none';
+      savedClientPayload = null;
+      return;
+    }
+
+    if (data && data.found) {
+      savedClientPayload = data;
+      returningClientBox.style.display = 'block';
+    } else {
+      savedClientPayload = null;
+      returningClientBox.style.display = 'none';
+    }
+  }
+
+  function fillSavedInfo(payload) {
+    if (!payload || !payload.client) return;
+
+    const client = payload.client;
+    const pets = payload.pets || [];
+
+    const fullNameField = document.querySelector('[name="client_name"]');
+    const emailField = document.querySelector('[name="client_email"]');
+    const phoneField = document.querySelector('[name="client_phone"]');
+
+    if (fullNameField) fullNameField.value = client.full_name || '';
+    if (emailField) emailField.value = client.email || '';
+    if (phoneField) phoneField.value = client.phone || '';
+
+    if (pets.length > 0) {
+      const firstPet = pets[0];
+
+      const petNameField = document.querySelector('[name="pet_name"]');
+      const breedField = document.querySelector('[name="breed"]');
+      const ageField = document.querySelector('[name="age"]');
+      const weightField = document.querySelector('[name="weight_lbs"]');
+      const temperamentField = document.querySelector('[name="temperament_notes"]');
+      const careField = document.querySelector('[name="care_notes"]');
+      const medicationField = document.querySelector('[name="medication_notes"]');
+
+      if (petNameField) petNameField.value = firstPet.pet_name || '';
+      if (breedField) breedField.value = firstPet.breed || '';
+      if (ageField) ageField.value = firstPet.age || '';
+      if (weightField) weightField.value = firstPet.weight_lbs || '';
+      if (temperamentField) temperamentField.value = firstPet.temperament_notes || '';
+      if (careField) careField.value = firstPet.care_notes || '';
+      if (medicationField) medicationField.value = firstPet.medication_notes || '';
+    }
+  }
+
+  let lookupTimer;
+  emailLookupInput.addEventListener('input', () => {
+    clearTimeout(lookupTimer);
+    const email = emailLookupInput.value.trim();
+
+    lookupTimer = setTimeout(() => {
+      if (email.includes('@')) lookupClientByEmail(email);
+    }, 500);
+  });
+
+  useSavedInfoBtn.addEventListener('click', () => {
+    fillSavedInfo(savedClientPayload);
+  });
+
+  startFreshBtn.addEventListener('click', () => {
+    savedClientPayload = null;
+    returningClientBox.style.display = 'none';
+  });
+</script>
 
 </body>
 </html>
