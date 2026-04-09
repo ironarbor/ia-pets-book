@@ -843,7 +843,7 @@
       showMessage('Submitting request...', false);
 
       try {
-        const response = await fetch(`${config.EDGE_BASE_URL}/create-booking-request`, {
+        const response = await fetch(`${config.EDGE_BASE_URL}/smart-function`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
